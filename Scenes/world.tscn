@@ -1,0 +1,236 @@
+[gd_scene load_steps=11 format=3 uid="uid://3xbh8vl05lf6"]
+
+[ext_resource type="PackedScene" uid="uid://ctqncq7cta6mk" path="res://Scenes/rooms.tscn" id="1_o6fwa"]
+[ext_resource type="Script" path="res://Scripts/waypoint.gd" id="2_dohfj"]
+[ext_resource type="Script" path="res://Scripts/npc.gd" id="3_jg1ri"]
+[ext_resource type="Script" path="res://Scripts/looking_at.gd" id="4_qoukc"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m2qtr"]
+albedo_color = Color(0.824893, 0.956668, 0.956493, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_vpsa8"]
+material = SubResource("StandardMaterial3D_m2qtr")
+size = Vector2(50, 50)
+
+[sub_resource type="SphereMesh" id="SphereMesh_xk7hf"]
+radius = 0.1
+height = 0.2
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_x47pm"]
+radius = 0.25
+height = 1.0
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_34ot0"]
+radius = 0.25
+height = 1.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_jtaqp"]
+top_radius = 0.05
+bottom_radius = 0.1
+height = 1.0
+
+[node name="World" type="Node3D"]
+
+[node name="Rooms" parent="." instance=ExtResource("1_o6fwa")]
+
+[node name="4th wall shit" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="4th wall shit"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965926, 0, -0.965926, 0.258819, 0, 9, 3)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="4th wall shit"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 6, 0)
+
+[node name="Background" type="MeshInstance3D" parent="4th wall shit"]
+mesh = SubResource("PlaneMesh_vpsa8")
+
+[node name="Waypoints" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="Waypoint1" type="Node3D" parent="Waypoints" node_paths=PackedStringArray("Adjacents")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0.5)
+script = ExtResource("2_dohfj")
+Adjacents = [NodePath("../Waypoint2"), NodePath("../Waypoint7")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Waypoints/Waypoint1"]
+mesh = SubResource("SphereMesh_xk7hf")
+
+[node name="Waypoint2" type="Node3D" parent="Waypoints" node_paths=PackedStringArray("Adjacents")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 2.5)
+script = ExtResource("2_dohfj")
+Adjacents = [NodePath("../Waypoint1"), NodePath("../Waypoint3"), NodePath("../Waypoint4"), NodePath("../Waypoint5")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Waypoints/Waypoint2"]
+mesh = SubResource("SphereMesh_xk7hf")
+
+[node name="Waypoint3" type="Node3D" parent="Waypoints" node_paths=PackedStringArray("Adjacents")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 4)
+script = ExtResource("2_dohfj")
+Adjacents = [NodePath("../Waypoint2"), NodePath("../Waypoint4")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Waypoints/Waypoint3"]
+mesh = SubResource("SphereMesh_xk7hf")
+
+[node name="Waypoint4" type="Node3D" parent="Waypoints" node_paths=PackedStringArray("Adjacents")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
+script = ExtResource("2_dohfj")
+Adjacents = [NodePath("../Waypoint3"), NodePath("../Waypoint2")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Waypoints/Waypoint4"]
+mesh = SubResource("SphereMesh_xk7hf")
+
+[node name="Waypoint5" type="Node3D" parent="Waypoints" node_paths=PackedStringArray("Adjacents")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 2.5)
+script = ExtResource("2_dohfj")
+Adjacents = [NodePath("../Waypoint2"), NodePath("../Waypoint6")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Waypoints/Waypoint5"]
+mesh = SubResource("SphereMesh_xk7hf")
+
+[node name="Waypoint6" type="Node3D" parent="Waypoints" node_paths=PackedStringArray("Adjacents")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 4)
+script = ExtResource("2_dohfj")
+Adjacents = [NodePath("../Waypoint5")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Waypoints/Waypoint6"]
+mesh = SubResource("SphereMesh_xk7hf")
+
+[node name="Waypoint7" type="Node3D" parent="Waypoints" node_paths=PackedStringArray("Adjacents")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 1.75)
+script = ExtResource("2_dohfj")
+Adjacents = [NodePath("../Waypoint1"), NodePath("../Waypoint8"), NodePath("../Waypoint9")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Waypoints/Waypoint7"]
+mesh = SubResource("SphereMesh_xk7hf")
+
+[node name="Waypoint8" type="Node3D" parent="Waypoints" node_paths=PackedStringArray("Adjacents")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 3.75)
+script = ExtResource("2_dohfj")
+Adjacents = [NodePath("../Waypoint7")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Waypoints/Waypoint8"]
+mesh = SubResource("SphereMesh_xk7hf")
+
+[node name="Waypoint9" type="Node3D" parent="Waypoints" node_paths=PackedStringArray("Adjacents")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0)
+script = ExtResource("2_dohfj")
+Adjacents = [NodePath("../Waypoint7"), NodePath("../Waypoint10")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Waypoints/Waypoint9"]
+mesh = SubResource("SphereMesh_xk7hf")
+
+[node name="Waypoint10" type="Node3D" parent="Waypoints" node_paths=PackedStringArray("Adjacents")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -1.5)
+script = ExtResource("2_dohfj")
+Adjacents = [NodePath("../Waypoint9"), NodePath("../Waypoint11"), NodePath("../Waypoint12")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Waypoints/Waypoint10"]
+mesh = SubResource("SphereMesh_xk7hf")
+
+[node name="Waypoint11" type="Node3D" parent="Waypoints" node_paths=PackedStringArray("Adjacents")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0, -1.5)
+script = ExtResource("2_dohfj")
+Adjacents = [NodePath("../Waypoint10"), NodePath("../Waypoint13")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Waypoints/Waypoint11"]
+mesh = SubResource("SphereMesh_xk7hf")
+
+[node name="Waypoint12" type="Node3D" parent="Waypoints" node_paths=PackedStringArray("Adjacents")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -4)
+script = ExtResource("2_dohfj")
+Adjacents = [NodePath("../Waypoint10"), NodePath("../Waypoint14")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Waypoints/Waypoint12"]
+mesh = SubResource("SphereMesh_xk7hf")
+
+[node name="Waypoint13" type="Node3D" parent="Waypoints" node_paths=PackedStringArray("Adjacents")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.15, 0, -0.5)
+script = ExtResource("2_dohfj")
+Adjacents = [NodePath("../Waypoint11"), NodePath("../Waypoint15")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Waypoints/Waypoint13"]
+mesh = SubResource("SphereMesh_xk7hf")
+
+[node name="Waypoint14" type="Node3D" parent="Waypoints" node_paths=PackedStringArray("Adjacents")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -4)
+script = ExtResource("2_dohfj")
+Adjacents = [NodePath("../Waypoint12"), NodePath("../Waypoint16")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Waypoints/Waypoint14"]
+mesh = SubResource("SphereMesh_xk7hf")
+
+[node name="Waypoint15" type="Node3D" parent="Waypoints" node_paths=PackedStringArray("Adjacents")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -1.5)
+script = ExtResource("2_dohfj")
+Adjacents = [NodePath("../Waypoint13"), NodePath("../Waypoint16")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Waypoints/Waypoint15"]
+mesh = SubResource("SphereMesh_xk7hf")
+
+[node name="Waypoint16" type="Node3D" parent="Waypoints" node_paths=PackedStringArray("Adjacents")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -1.5)
+script = ExtResource("2_dohfj")
+Adjacents = [NodePath("../Waypoint15"), NodePath("../Waypoint14"), NodePath("../Waypoint17")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Waypoints/Waypoint16"]
+mesh = SubResource("SphereMesh_xk7hf")
+
+[node name="Waypoint17" type="Node3D" parent="Waypoints" node_paths=PackedStringArray("Adjacents")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0.5)
+script = ExtResource("2_dohfj")
+Adjacents = [NodePath("../Waypoint16")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Waypoints/Waypoint17"]
+mesh = SubResource("SphereMesh_xk7hf")
+
+[node name="NPC" type="CharacterBody3D" parent="." node_paths=PackedStringArray("current_target", "look_target", "for_movement")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1, 2.4)
+script = ExtResource("3_jg1ri")
+current_target = NodePath("../Waypoints/Waypoint1")
+look_target = NodePath("../looking at")
+for_movement = NodePath("ForMoves")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NPC"]
+mesh = SubResource("CapsuleMesh_x47pm")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NPC"]
+shape = SubResource("CapsuleShape3D_34ot0")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="NPC"]
+transform = Transform3D(1, 0, 0, 0, -0.325568, 0.945519, 0, -0.945519, -0.325568, 0.293, 0.06, -0.283)
+mesh = SubResource("CylinderMesh_jtaqp")
+skeleton = NodePath("../..")
+
+[node name="ForMoves" type="Node3D" parent="NPC"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.652115)
+
+[node name="looking at" type="Node3D" parent="." node_paths=PackedStringArray("pos")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1, 0.4)
+script = ExtResource("4_qoukc")
+pos = NodePath("../NPC")
+
+[node name="NPC2" type="CharacterBody3D" parent="." node_paths=PackedStringArray("current_target", "look_target", "for_movement")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1207, 1, -1.11687)
+script = ExtResource("3_jg1ri")
+current_target = NodePath("../Waypoints/Waypoint16")
+look_target = NodePath("../looking at2")
+for_movement = NodePath("ForMoves")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NPC2"]
+mesh = SubResource("CapsuleMesh_x47pm")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NPC2"]
+shape = SubResource("CapsuleShape3D_34ot0")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="NPC2"]
+transform = Transform3D(1, 0, 0, 0, -0.325568, 0.945519, 0, -0.945519, -0.325568, 0.293, 0.06, -0.283)
+mesh = SubResource("CylinderMesh_jtaqp")
+skeleton = NodePath("../..")
+
+[node name="ForMoves" type="Node3D" parent="NPC2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.652115)
+
+[node name="looking at2" type="Node3D" parent="." node_paths=PackedStringArray("pos")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1207, 1, -3.11687)
+script = ExtResource("4_qoukc")
+pos = NodePath("../NPC2")
